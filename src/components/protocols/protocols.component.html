@@ -1,58 +1,46 @@
 <div class="p-8">
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-3xl font-bold text-gray-800">Protocolos Alimentares</h2>
-    <button (click)="createNewProtocol()" class="flex items-center bg-primary text-white px-4 py-2 rounded-lg shadow-md hover:bg-primary-focus transition-colors">
-      <i-lucide name="plus-circle" class="w-5 h-5 mr-2"></i-lucide>
-      Novo Protocolo
-    </button>
-  </div>
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">Biblioteca de Conteúdos</h2>
 
-  <div class="bg-white rounded-xl shadow-lg border p-6">
-    <ul class="divide-y divide-gray-200">
-      @for (protocol of protocols(); track protocol.id) {
-        <li class="py-4 flex justify-between items-center">
-          <div>
-            <h3 class="text-lg font-semibold text-gray-800">{{ protocol.name }}</h3>
-            <p class="text-sm text-gray-500">{{ protocol.description }}</p>
+    <!-- Free Content -->
+    <div class="mb-12">
+      <h3 class="text-2xl font-semibold text-gray-700 mb-4 pb-2 border-b-2 border-primary">
+        <i-lucide name="gift" class="inline-block w-6 h-6 mr-2"></i-lucide>
+        Conteúdo Gratuito
+      </h3>
+      <div class="space-y-4">
+        @for (item of freeContent(); track item.id) {
+          <div class="bg-white rounded-lg shadow-md border border-gray-200 p-5">
+            <h4 class="text-lg font-bold text-gray-800">{{ item.name }}</h4>
+            <p class="text-sm text-gray-600 mt-1">{{ item.description }}</p>
           </div>
-          <button (click)="editProtocol(protocol)" class="text-sm font-medium text-primary hover:text-primary-focus">
-            Editar
-          </button>
-        </li>
-      } @empty {
-        <li class="py-8 text-center text-gray-500">
-          Nenhum protocolo cadastrado.
-        </li>
-      }
-    </ul>
-  </div>
-</div>
+        } @empty {
+          <p class="text-gray-500">Nenhum conteúdo gratuito disponível no momento.</p>
+        }
+      </div>
+    </div>
 
-<!-- Modal -->
-@if (showModal() && editingProtocol(); as protocol) {
-  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg m-4">
-      <div class="p-6 border-b">
-        <h3 class="text-xl font-bold text-gray-800">{{ protocol.id ? 'Editar Protocolo' : 'Novo Protocolo' }}</h3>
-      </div>
-      <div class="p-6 space-y-4">
-        <div>
-          <label for="proto-name" class="block text-sm font-medium text-gray-700">Nome</label>
-          <input type="text" id="proto-name" [(ngModel)]="protocol.name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary">
-        </div>
-        <div>
-          <label for="proto-desc" class="block text-sm font-medium text-gray-700">Descrição</label>
-          <input type="text" id="proto-desc" [(ngModel)]="protocol.description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary">
-        </div>
-        <div>
-          <label for="proto-content" class="block text-sm font-medium text-gray-700">Conteúdo</label>
-          <textarea id="proto-content" [(ngModel)]="protocol.content" rows="5" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"></textarea>
-        </div>
-      </div>
-      <div class="px-6 py-4 bg-gray-50 flex justify-end space-x-3">
-        <button (click)="closeModal()" class="bg-white text-gray-700 px-4 py-2 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50">Cancelar</button>
-        <button (click)="saveProtocol()" class="bg-primary text-white px-6 py-2 rounded-lg shadow-md hover:bg-primary-focus">Salvar</button>
+    <!-- VIP Content -->
+    <div>
+      <h3 class="text-2xl font-semibold text-gray-700 mb-4 pb-2 border-b-2 border-secondary">
+        <i-lucide name="gem" class="inline-block w-6 h-6 mr-2 text-secondary-focus"></i-lucide>
+        Área VIP
+      </h3>
+      <div class="space-y-4">
+        @for (item of vipContent(); track item.id) {
+          <div class="bg-white rounded-lg shadow-md border border-gray-200 p-5 relative overflow-hidden">
+            <div class="absolute top-0 right-0 h-12 w-12">
+                <div class="absolute transform rotate-45 bg-secondary-focus text-center text-white font-semibold py-1 right-[-34px] top-[14px] w-[120px]">
+                    VIP
+                </div>
+            </div>
+            <h4 class="text-lg font-bold text-gray-800">{{ item.name }}</h4>
+            <p class="text-sm text-gray-600 mt-1">{{ item.description }}</p>
+          </div>
+        } @empty {
+          <p class="text-gray-500">Nenhum conteúdo VIP disponível no momento.</p>
+        }
       </div>
     </div>
   </div>
-}
+</div>

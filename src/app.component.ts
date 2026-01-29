@@ -2,11 +2,11 @@ import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ChallengeEditorComponent } from './components/challenge-editor/challenge-editor.component';
-import { ProtocolsComponent } from './components/protocols/protocols.component';
+import { LibraryComponent } from './components/protocols/protocols.component';
 import { PrizesComponent } from './components/prizes/prizes.component';
 import { MembersViewComponent } from './components/members-view/members-view.component';
 
-type View = 'dashboard' | 'protocols' | 'prizes' | 'members-view';
+type View = 'dashboard' | 'library' | 'prizes' | 'members-view';
 type EditorView = { view: 'editor', id: string | null };
 type CurrentView = { view: View } | EditorView;
 
@@ -17,7 +17,7 @@ type CurrentView = { view: View } | EditorView;
     CommonModule,
     DashboardComponent,
     ChallengeEditorComponent,
-    ProtocolsComponent,
+    LibraryComponent,
     PrizesComponent,
     MembersViewComponent,
   ],
@@ -29,7 +29,7 @@ export class AppComponent {
 
   menuItems: { id: View; label: string; icon: string }[] = [
     { id: 'dashboard', label: 'Painel', icon: 'layout-dashboard' },
-    { id: 'protocols', label: 'Protocolos', icon: 'notebook-tabs' },
+    { id: 'library', label: 'Biblioteca', icon: 'library' },
     { id: 'prizes', label: 'Prêmios', icon: 'trophy' },
     { id: 'members-view', label: 'Visão do Membro', icon: 'users' },
   ];

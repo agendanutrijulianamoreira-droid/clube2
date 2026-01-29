@@ -22,6 +22,7 @@ export interface Protocol {
   name: string;
   description: string;
   content: string; // Can be markdown or HTML
+  type: 'free' | 'vip';
 }
 
 export interface Prize {

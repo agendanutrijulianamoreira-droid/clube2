@@ -36,8 +36,8 @@
     @if (isEditorView()) {
       <app-challenge-editor [challengeId]="getEditorId()" (closeEditor)="changeView('dashboard')"></app-challenge-editor>
     }
-    @if (isCurrentView('protocols')) {
-      <app-protocols></app-protocols>
+    @if (isCurrentView('library')) {
+      <app-library></app-library>
     }
     @if (isCurrentView('prizes')) {
       <app-prizes></app-prizes>

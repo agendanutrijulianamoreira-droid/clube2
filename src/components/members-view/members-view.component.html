@@ -1,13 +1,14 @@
 <div class="p-8 bg-gray-50 min-h-full">
-  <div class="max-w-4xl mx-auto">
+  <div class="max-w-6xl mx-auto">
     <div class="text-center mb-8">
       <h2 class="text-3xl font-bold text-gray-800">Bem-vinda ao Clube!</h2>
       <p class="text-gray-600 mt-2">Aqui está o seu progresso e o ranking da comunidade.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Left column: Active Challenge -->
-      <div class="md:col-span-2">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Center column: Main content -->
+      <div class="lg:col-span-2 order-2 lg:order-1">
+        <!-- Active Challenge -->
         <div class="bg-white p-6 rounded-xl shadow-lg border">
           <h3 class="text-xl font-bold text-gray-800 mb-4">Desafio Ativo</h3>
           @if (activeChallenge(); as challenge) {
@@ -36,33 +37,42 @@
           }
         </div>
 
+        <!-- AI Coach -->
         <div class="mt-8 bg-white p-6 rounded-xl shadow-lg border">
-           <h3 class="text-xl font-bold text-gray-800 mb-4">Acesso Rápido</h3>
-           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-               <a href="#" class="block p-4 bg-teal-50 hover:bg-teal-100 rounded-lg transition-colors">
-                   <div class="flex items-center">
-                       <i-lucide name="utensils-crossed" class="w-6 h-6 mr-3 text-primary"></i-lucide>
-                       <div>
-                           <p class="font-semibold text-gray-800">Cardápio do Mês</p>
-                           <p class="text-xs text-gray-500">Acessar o plano alimentar</p>
-                       </div>
-                   </div>
-               </a>
-               <a href="#" class="block p-4 bg-pink-50 hover:bg-pink-100 rounded-lg transition-colors">
-                   <div class="flex items-center">
-                       <i-lucide name="message-circle" class="w-6 h-6 mr-3 text-accent"></i-lucide>
-                       <div>
-                           <p class="font-semibold text-gray-800">Grupo no WhatsApp</p>
-                           <p class="text-xs text-gray-500">Interagir com a comunidade</p>
-                       </div>
-                   </div>
-               </a>
+           <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+             <i-lucide name="bot" class="w-6 h-6 mr-3 text-primary"></i-lucide>
+             Fale com a Luna, sua Coach IA
+           </h3>
+           <div class="h-64 overflow-y-auto p-4 bg-gray-100 rounded-lg flex flex-col space-y-3">
+              @for(message of messages(); track $index) {
+                <div class="flex" [class.justify-end]="message.author === 'user'">
+                  <div class="rounded-lg px-4 py-2 max-w-sm" [class]="message.author === 'user' ? 'bg-primary text-white' : 'bg-gray-200 text-gray-800'">
+                    {{ message.content }}
+                  </div>
+                </div>
+              }
+              @if (messages().length === 0) {
+                 <div class="text-center text-gray-500 text-sm self-center">
+                   <p>Precisa de ajuda ou quer fazer um check-in?</p>
+                   <p>Conte para a Luna! Ex: "Minha janta hoje foi salmão com brócolis."</p>
+                 </div>
+              }
+           </div>
+           <div class="mt-4 flex">
+             <input type="text" [(ngModel)]="userInput" (keyup.enter)="sendMessage()" placeholder="Digite sua mensagem..." class="flex-1 border-gray-300 rounded-l-lg focus:ring-primary focus:border-primary">
+             <button (click)="sendMessage()" [disabled]="geminiService.loading()" class="px-4 py-2 bg-primary text-white font-semibold rounded-r-lg hover:bg-primary-focus disabled:bg-primary/50 flex items-center">
+                @if(geminiService.loading()){
+                  <i-lucide name="loader-circle" class="w-5 h-5 animate-spin"></i-lucide>
+                } @else {
+                  <i-lucide name="send" class="w-5 h-5"></i-lucide>
+                }
+             </button>
            </div>
         </div>
       </div>
 
-      <!-- Right column: Leaderboard -->
-      <div class="md:col-span-1">
+      <!-- Right column: Leaderboard & Quick Access -->
+      <div class="lg:col-span-1 order-1 lg:order-2 space-y-8">
         <div class="bg-white p-6 rounded-xl shadow-lg border h-full">
           <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Ranking</h3>
           <ul class="space-y-4">
@@ -83,6 +93,29 @@
               </li>
             }
           </ul>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-lg border">
+           <h3 class="text-xl font-bold text-gray-800 mb-4">Acesso Rápido</h3>
+           <div class="grid grid-cols-1 gap-4">
+               <a href="#" class="block p-4 bg-teal-50 hover:bg-teal-100 rounded-lg transition-colors">
+                   <div class="flex items-center">
+                       <i-lucide name="utensils-crossed" class="w-6 h-6 mr-3 text-primary"></i-lucide>
+                       <div>
+                           <p class="font-semibold text-gray-800">Cardápio do Mês</p>
+                           <p class="text-xs text-gray-500">Acessar o plano alimentar</p>
+                       </div>
+                   </div>
+               </a>
+               <a href="#" class="block p-4 bg-pink-50 hover:bg-pink-100 rounded-lg transition-colors">
+                   <div class="flex items-center">
+                       <i-lucide name="message-circle" class="w-6 h-6 mr-3 text-accent"></i-lucide>
+                       <div>
+                           <p class="font-semibold text-gray-800">Grupo no WhatsApp</p>
+                           <p class="text-xs text-gray-500">Interagir com a comunidade</p>
+                       </div>
+                   </div>
+               </a>
+           </div>
         </div>
       </div>
     </div>

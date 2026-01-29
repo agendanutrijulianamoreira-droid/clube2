@@ -36,9 +36,13 @@ export class StateService {
     }
   ]);
 
-  readonly protocols = signal<Protocol[]>([
-    { id: 'p1', name: 'Protocolo Pré-Festa', description: 'O que comer antes de eventos sociais.', content: 'Foco em proteínas e fibras.' },
-    { id: 'p2', name: 'Protocolo Pós-Páscoa', description: 'Para desinchar e voltar à rotina.', content: 'Muita água, chás e comida de verdade.' }
+  readonly libraryItems = signal<Protocol[]>([
+    { id: 'f1', name: 'Comece por Aqui', description: 'Regras do clube e como usar o app.', content: 'Vídeo de 3-5 minutos explicando a comunidade.', type: 'free' },
+    { id: 'f2', name: 'Plano de 7 Dias: Menos Inchaço', description: 'Seu plano para uma vitória rápida!', content: 'Rotina simples com foco em hidratação e digestão.', type: 'free' },
+    { id: 'f3', name: 'Checklist de Sinais do Corpo', description: 'Aprenda a ouvir seu corpo.', content: 'Um guia para auto-observação de sono, energia e intestino.', type: 'free' },
+    { id: 'v1', name: 'Cardápio do Mês', description: 'O plano alimentar completo para este mês.', content: 'Cardápio detalhado com receitas e lista de compras.', type: 'vip' },
+    { id: 'v2', name: 'Protocolo "Ciclo em Paz"', description: 'Estratégias nutricionais para cada fase do ciclo menstrual.', content: 'Aulas e guias práticos.', type: 'vip' },
+    { id: 'v3', name: 'Aulas sobre Sono Reparador', description: 'Aprenda a otimizar seu descanso.', content: 'Técnicas e estratégias para melhorar a qualidade do sono.', type: 'vip' }
   ]);
 
   readonly prizes = signal<Prize[]>([
@@ -68,12 +72,12 @@ export class StateService {
     return computed(() => this.challenges().find(c => c.id === id));
   }
   
-  addProtocol(protocol: Protocol) {
-      this.protocols.update(p => [...p, protocol]);
+  addLibraryItem(protocol: Protocol) {
+      this.libraryItems.update(p => [...p, protocol]);
   }
 
-  updateProtocol(updated: Protocol) {
-      this.protocols.update(p => p.map(item => item.id === updated.id ? updated : item));
+  updateLibraryItem(updated: Protocol) {
+      this.libraryItems.update(p => p.map(item => item.id === updated.id ? updated : item));
   }
 
   addPrize(prize: Prize) {
