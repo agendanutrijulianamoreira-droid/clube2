@@ -1,0 +1,49 @@
+<div class="flex h-screen bg-gray-100 font-sans">
+  <!-- Sidebar -->
+  <aside class="w-64 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col">
+    <div class="h-16 flex items-center justify-center px-4 border-b">
+      <h1 class="text-2xl font-bold text-primary">
+        <i-lucide name="sparkles" class="inline-block mr-2"></i-lucide>Clube da Nutri
+      </h1>
+    </div>
+    <nav class="flex-1 px-4 py-4 space-y-2">
+      @for (item of menuItems; track item.id) {
+        <button 
+          (click)="changeView(item.id)"
+          [class]="'w-full flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors duration-200 ' + (isCurrentView(item.id) ? 'bg-teal-50 text-primary' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900')"
+        >
+          <i-lucide [attr.name]="item.icon" class="w-5 h-5 mr-3"></i-lucide>
+          <span>{{ item.label }}</span>
+        </button>
+      }
+    </nav>
+    <div class="px-4 py-4 border-t">
+        <div class="flex items-center">
+            <img class="h-10 w-10 rounded-full object-cover" src="https://i.pravatar.cc/150?u=nutri" alt="Nutricionista">
+            <div class="ml-3">
+                <p class="text-sm font-medium text-gray-800">Juliana Moreira</p>
+                <p class="text-xs text-gray-500">Nutricionista</p>
+            </div>
+        </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="flex-1 overflow-y-auto">
+    @if (isCurrentView('dashboard')) {
+      <app-dashboard (editChallenge)="navigateToEditor($event)" (newChallenge)="navigateToEditor(null)"></app-dashboard>
+    }
+    @if (isEditorView()) {
+      <app-challenge-editor [challengeId]="getEditorId()" (closeEditor)="changeView('dashboard')"></app-challenge-editor>
+    }
+    @if (isCurrentView('protocols')) {
+      <app-protocols></app-protocols>
+    }
+    @if (isCurrentView('prizes')) {
+      <app-prizes></app-prizes>
+    }
+    @if (isCurrentView('members-view')) {
+      <app-members-view></app-members-view>
+    }
+  </main>
+</div>

@@ -1,0 +1,5 @@
+{
+  "name": "Clube da Nutri AI",
+  "description": "An application for nutritionists to create, manage, and gamify nutritional challenges for their clients using AI. Features include challenge scheduling, point systems, prize management, and a dedicated member area.",
+  "requestFramePermissions": []
+}
